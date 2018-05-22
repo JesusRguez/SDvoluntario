@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+   
+  <title><%= @page_title || 'BuyFilms' %></title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+</head>
+<body>
+  <div id="header">
+    <h1 id="logo">BuyFilms</h1>
+    <h2 id="slogan">Films on Rails</h2>
+    <% if current_user %>
+      <p id="loginlogout">
+        Identificado como <%= current_user.login %>
+        (<%= link_to "Editar cuenta", :controller => '/user', :action => :show %>)
+        <br/>
+        (<%= link_to "Logout", :controller => '/user_session', :action => :destroy %>)
+      </p>
+    <% else %>
+      <p id="loginlogout">
+        <% if User.count == 0 %>
+          (<%= link_to "Crear nueva cuenta", :controller => '/user', :action => :new %>)
+        <% else %>
+          (<%= link_to "Identificarse", :controller => '/user_session', :action => :new %>)
+        <% end %>
+      </p>
+    <% end %>
+
+  </div>
+
+  <div id="menu">
+    <ul>
+      <li><a href="/admin/movie">Películas</a>&nbsp;|&nbsp;</li>
+      <li><a href="/admin/director">Directores</a>&nbsp;|&nbsp;</li>
+      <li><a href="/admin/producer">Productores</a>&nbsp;|&nbsp;</li>
+      <li><a href="/admin/order">Pedidos</a>&nbsp;|&nbsp;</li>
+      <li><a href="/">Catálogo</a>&nbsp;|&nbsp;</li>
+      <li><a href="/about">Acerca de</a>&nbsp;</li>
+    </ul>
+  </div>
+
+  <div id="content">
+    <h1><%= @page_title if @page_title %></h1>
+    <% if flash[:notice] %>
+      <div id="notice"><%= flash[:notice] %></div>
+    <% end %>
+    <%= yield %>
+  </div>
+
+  <% if @cart %>
+    <div id="shopping_cart"><%= render :partial => 'cart/cart' %></div>
+  <% end %>
+
+  <div id="footer">
+    &copy; 2017-2018 BuyFilms
+  </div>
+</body>
+</html>
