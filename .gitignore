@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 *.o
+*.cpp~
+*.java~
+.gitignore~
 
 # Log file
 *.log
